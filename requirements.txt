@@ -1,0 +1,54 @@
+# Packages for Project 01 (variational autoencoder).
+#
+# The same command installs them on macOS, Linux and Windows. Run it inside a
+# virtual environment, from the folder that contains this file:
+#
+#     python -m pip install -r requirements.txt
+#
+# Python 3.11 or newer is required (on a Mac with an Intel processor: 3.11 or 3.12).
+
+# --- PyTorch ------------------------------------------------------------------
+
+# The build that pip selects depends on the platform:
+#   macOS    Apple silicon: a recent release, with GPU support (mps).
+#            Intel: 2.2.2, the last release for it.
+#   Linux    build with NVIDIA GPU (cuda) support; it also runs without a GPU.
+#   Windows  CPU-only build.
+# For another build (GPU on Windows, a smaller CPU-only download on Linux),
+# first install torch and torchvision with the command given at
+# https://pytorch.org/get-started/locally/ and then run the command above.
+torch>=2.2
+
+# --- to run assignment_01.ipynb -------------------------------------------------
+
+matplotlib
+numpy ; sys_platform != "darwin" or platform_machine != "x86_64"
+
+# Jupyter: ipykernel runs the notebook in VS Code, notebook runs it in a
+# browser (command: jupyter notebook). nbconvert, installed with notebook,
+# converts the notebook to HTML for the submission.
+ipykernel
+notebook
+
+# --- FID in util/result.py ------------------------------------------------------
+
+# torcheval computes the FID with the Inception-v3 network of torchvision.
+# A GPU is recommended for it: with a CPU it can take more than 10 minutes.
+torcheval
+torchvision
+
+# --- Macs with an Intel processor only ------------------------------------------
+
+# PyTorch 2.2.2 does not work with NumPy 2.
+numpy<2 ; sys_platform == "darwin" and platform_machine == "x86_64"
+
+# --- optional: to create the data files again -----------------------------------
+
+# The data files are provided in the data folder, so these packages are not
+# needed for the assignment. To run util/prepare_data_mnist.py, install them
+# with:
+#
+#     python -m pip install datasets pillow
+#
+# On a Mac with an Intel processor, add "pyarrow<26" to that command: pyarrow
+# (installed with datasets) requires NumPy 2 from its version 26.
